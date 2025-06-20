@@ -18,7 +18,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -201,10 +201,11 @@ app.get('/api/walkers/summary', async (req, res) => {
 
 
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-//  Error handling logic by the Node.js application
+//  ----------------------- Error handling logic by the Node.js application
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
