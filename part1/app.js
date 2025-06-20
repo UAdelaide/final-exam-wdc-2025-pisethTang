@@ -41,7 +41,8 @@ let db;
       host: 'localhost',
       user: 'root',
       password: '', // IMPORTANT: Set your MySQL root password here
-      multipleStatements: true // Allows execution of multiple SQL statements in one query (for dogwalks.sql)
+      multipleStatements: true // Allows execution of multiple SQL statements
+                                // in one query (for dogwalks.sql)
     });
 
     // 2. Read the dogwalks.sql file
