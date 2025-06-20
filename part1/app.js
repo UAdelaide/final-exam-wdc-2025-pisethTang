@@ -26,6 +26,8 @@ app.use('/users', usersRouter);
 
 
 
+// Following 
+let db;
 
 
 
@@ -46,9 +48,7 @@ app.use('/users', usersRouter);
 
 
 
-
-
-//  Error handling logic by 
+//  Error handling logic by the Node.js application
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
