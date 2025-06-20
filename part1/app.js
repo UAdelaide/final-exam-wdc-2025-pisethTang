@@ -92,7 +92,7 @@ let db;
       `);
       console.log('Dogs inserted.');
 
-      // -- Insert Five Walk Requests (using subqueries for
+      // Insert Five Walk Requests (using subqueries for
       //  dog_id and owner_id to find the right dog)
       await db.execute(`
         INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status) VALUES
@@ -104,7 +104,7 @@ let db;
       `);
       console.log('Walk Requests inserted.');
 
-      // -- Insert WalkRatings
+      // Insert WalkRatings
       await db.execute(`
       INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments) VALUES
       -- Bob's ratings
