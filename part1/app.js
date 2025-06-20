@@ -32,10 +32,7 @@ let db;
 
 (async () => {
   try {
-    // Connect to MySQL without specifying a database
-    const connection = await mysql.createConnection({
-      host: 'localhost',
-      user
+    // Connect to 
   }
 })
 
