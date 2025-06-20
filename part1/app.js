@@ -132,7 +132,7 @@ let db;
       ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Daisy' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')) AND requested_time = '2025-06-11 14:00:00'), (SELECT user_id FROM Users WHERE username = 'sarahwalker'), (SELECT user_id FROM Users WHERE username = 'alice123'), 5, 'Sarah was amazing with Daisy! ');
     `);
       console.log('Walk Ratings inserted.');
-      console.log('------------------------- ALL DATA INSERTED----------------------');
+      console.log('------------------------- ALL TABLES POPULATED! ----------------------');
     }
 
   } catch (err) {
