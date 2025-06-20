@@ -91,7 +91,8 @@ let db;
       `);
       console.log('Dogs inserted.');
 
-      // -- Insert Five Walk Requests (using subqueries for dog_id and owner_id to find the right dog)
+      // -- Insert Five Walk Requests (using subqueries for
+      //  dog_id and owner_id to find the right dog)
       await db.execute(`
         INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status) VALUES
         ((SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
@@ -108,7 +109,7 @@ let db;
   } catch (err) {
     console.error('Error setting up database. Ensure MySQL is running and accessible.', err);
     // Exit the process if database setup fails critically
-    process.exit(1);
+    // process.exit(1);
   }
 })();
 
