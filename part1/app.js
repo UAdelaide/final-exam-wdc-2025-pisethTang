@@ -135,11 +135,67 @@ app.get('/api/dogs', async (req, res) => {
 
 
 
+// Route to return all open walk requests,
+// including the dog name, requested time, location, and owner's username
+app.get('/api/walkrequests/open', async (req, res) => {
+  try {
+    const [openRequests] = await db.execute(`
+      SELECT
+        wr.request_id,
+        d.name AS dog_name,
+        wr.requested_time,
+        wr.duration_minutes,
+        wr.location,
+        u.username AS owner_username
+      FROM WalkRequests wr
+      JOIN Dogs d ON wr.dog_id = d.dog_id
+      JOIN Users u ON d.owner_id = u.user_id
+      WHERE wr.status = 'open';
+    `);
 
+    // Format requested_time to match sample "2025-06-10T08:00:00.000Z"
+    const formattedRequests = openRequests.map(request => ({
+      ...request,
+      requested_time: request.requested_time ? new Date(request.requested_time).toISOString() : null
+    }));
 
+    res.json(formattedRequests);
+  } catch (err) {
+    console.error('Error fetching open walk requests:', err);
+    res.status(500).json({ error: 'Failed to fetch open walk requests data' });
+  }
+});
 
+// Route to return a summary of each walker with their average rating and number of completed walks
+app.get('/api/walkers/summary', async (req, res) => {
+  try {
+    const [walkerSummary] = await db.execute(`
+      SELECT
+        u.username AS walker_username,
+        COALESCE(COUNT(wr.rating_id), 0) AS total_ratings,
+        COALESCE(AVG(wr.rating), NULL) AS average_rating,
+        COALESCE(COUNT(CASE WHEN wal.status = 'completed' THEN wal.application_id END), 0) AS completed_walks
+      FROM Users u
+      LEFT JOIN WalkApplications wa ON u.user_id = wa.walker_id
+      LEFT JOIN WalkRequests war ON wa.request_id = war.request_id AND war.status = 'completed'
+      LEFT JOIN WalkRatings wr ON wa.request_id = wr.request_id AND wa.walker_id = wr.walker_id
+      WHERE u.role = 'walker'
+      GROUP BY u.user_id, u.username
+      ORDER BY u.username;
+    `);
 
+    // Adjust NULL for average_rating if total_ratings is 0, to match sample output
+    const formattedSummary = walkerSummary.map(walker => ({
+      ...walker,
+      average_rating: walker.total_ratings === 0 ? null : parseFloat(walker.average_rating)
+    }));
 
+    res.json(formattedSummary);
+  } catch (err) {
+    console.error('Error fetching walkers summary:', err);
+    res.status(500).json({ error: 'Failed to fetch walkers summary data' });
+  }
+});
 
 
 
