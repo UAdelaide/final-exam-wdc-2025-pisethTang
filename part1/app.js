@@ -185,12 +185,12 @@ app.get('/api/walkers/summary', async (req, res) => {
     `);
 
     // Adjust NULL for average_rating if total_ratings is 0, to match sample output
-    const formattedSummary = walkerSummary.map(walker => ({
-      ...walker,
-      average_rating: walker.total_ratings === 0 ? null : parseFloat(walker.average_rating)
-    }));
+    // const formattedSummary = walkerSummary.map(walker => ({
+    //   ...walker,
+    //   average_rating: walker.total_ratings === 0 ? null : parseFloat(walker.average_rating)
+    // }));
 
-    res.json(formattedSummary);
+    // res.json(formattedSummary);
   } catch (err) {
     console.error('Error fetching walkers summary:', err);
     res.status(500).json({ error: 'Failed to fetch walkers summary data' });
