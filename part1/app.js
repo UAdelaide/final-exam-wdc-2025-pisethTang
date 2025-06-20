@@ -207,7 +207,6 @@ app.get('/api/walkers/summary', async (req, res) => {
 
     res.json(formattedSummary);
   } catch (err) {
-    console.error('Error fetching walkers summary:', err); // Log the actual error for debugging
     res.status(500).json({ error: 'Failed to fetch walkers summary data' });
   }
 });
