@@ -105,11 +105,11 @@ let db;
       console.log('Walk Requests inserted.');
       console.log('-----------------------------------------------');
     } else {
-      console.log('Database already populated. Skipping initial data insertion.');
+      console.log('------------------ Database already populated. Skipping initial data insertion --------------------');
     }
 
   } catch (err) {
-    console.error('Error setting up database. Ensure MySQL is running and accessible.', err);
+      console.error('Error setting up database. Ensure MySQL is running and accessible.', err);
     // Exit the process if database setup fails critically
     // process.exit(1);
   }
