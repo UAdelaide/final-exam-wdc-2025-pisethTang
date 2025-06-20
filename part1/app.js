@@ -26,7 +26,7 @@ app.use('/users', usersRouter);
 
 
 
-// Following 
+// Following app.js inside the /starthere directory, we will create a MySQL connection and set up the database.
 let db;
 
 
