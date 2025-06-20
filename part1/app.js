@@ -105,7 +105,7 @@ let db;
       console.log('Walk Requests inserted.');
 
       // -- Insert WalkRatings
-    await db.execute(`
+      await db.execute(`
       INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments) VALUES
       -- Bob's ratings
       ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Bella' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')) AND requested_time = '2025-06-10 09:30:00'), (SELECT user_id FROM Users WHERE username = 'bobwalker'), (SELECT user_id FROM Users WHERE username = 'carol123'), 5, 'Bob was fantastic with Bella!'),
@@ -115,7 +115,7 @@ let db;
       -- Sarah's rating (for Daisy's walk)
       ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Daisy' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')) AND requested_time = '2025-06-11 14:00:00'), (SELECT user_id FROM Users WHERE username = 'sarahwalker'), (SELECT user_id FROM Users WHERE username = 'alice123'), 5, 'Sarah was amazing with Daisy! ');
     `);
-    console.log('Walk Ratings inserted.');
+      console.log('Walk Ratings inserted.');
       console.log('-----------------------------------------------');
     }
 
