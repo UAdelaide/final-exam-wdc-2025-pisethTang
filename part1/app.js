@@ -114,6 +114,27 @@ let db;
 })();
 
 
+// Route to return a list of all dogs with their size and owner's username
+app.get('/api/dogs', async (req, res) => {
+  try {
+    const [dogs] = await db.execute(`
+      SELECT
+        d.name AS dog_name,
+        d.size,
+        u.username AS owner_username
+      FROM Dogs d
+      JOIN Users u ON d.owner_id = u.user_id;
+    `);
+    res.json(dogs);
+  } catch (err) {
+    console.error('Error fetching dogs:', err);
+    res.status(500).json({ error: 'Failed to fetch dogs data' });
+  }
+});
+
+
+
+
 
 
 
