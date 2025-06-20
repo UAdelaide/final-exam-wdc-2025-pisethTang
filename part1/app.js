@@ -103,6 +103,7 @@ let db;
         ((SELECT dog_id FROM Dogs WHERE name = 'Fido' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')), '2025-06-13 16:00:00', 45, 'Riverwalk Path', 'completed');
       `);
       console.log('Walk Requests inserted.');
+      console.log('-----------------------------------------------');
     } else {
       console.log('Database already populated. Skipping initial data insertion.');
     }
