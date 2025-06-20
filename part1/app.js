@@ -104,7 +104,7 @@ let db;
       `);
       console.log('Walk Requests inserted.');
 
-      // Insert WalkRatings
+      // Insert WalkRatings (this wasn't specifi)
       await db.execute(`
       INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments) VALUES
       -- Bob's ratings
