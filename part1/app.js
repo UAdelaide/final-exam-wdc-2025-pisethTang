@@ -104,9 +104,8 @@ let db;
       `);
       console.log('Walk Requests inserted.');
       console.log('-----------------------------------------------');
-    } else {
-      console.log('------------------ Database already populated. Skipping initial data insertion --------------------');
     }
+    
 
   } catch (err) {
       console.error('Error setting up database. Ensure MySQL is running and accessible.', err);
