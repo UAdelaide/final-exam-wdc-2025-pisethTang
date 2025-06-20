@@ -46,7 +46,9 @@ let db;
 
 
     // Now connect to the created database
-    
+    db = await mysql.createConnection({
+      
+    });
   } catch(err){
     console.error('Error setting up database. Ensure Mysql is running: service mysql start', err);
   }
