@@ -30,7 +30,6 @@ app.use('/users', usersRouter);
 let db;
 
 
-();
 
 
 
