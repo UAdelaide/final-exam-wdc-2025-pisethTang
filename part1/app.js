@@ -43,7 +43,7 @@ let db;
       user: 'root',
       password: '', // IMPORTANT: Set your MySQL root password here
       multipleStatements: true // Allows execution of multiple SQL statements
-                                // in one query (for dogwalks.sql)
+                             // in one query (for dogwalks.sql)
     });
 
     // 2. Read the dogwalks.sql file
@@ -67,72 +67,76 @@ let db;
 
     // 5. Check if Users table is empty before inserting data
     const [userRows] = await db.execute('SELECT COUNT(*) AS count FROM Users');
-    if (userRows[0].count === 0) {
+    if (userRows[0].count === 0) { // Condition restored as per your request
       console.log('Populating DogWalkService with initial data...');
 
-      // Insert Five Users
-   await db.execute(`
-      INSERT INTO Users (username, email, password_hash, role) VALUES
-      ('alice123', 'alice@example.com', 'hashed123', 'owner'),
-      ('bobwalker', 'bob@example.com', 'hashed456', 'walker'),
-      ('carol123', 'carol@example.com', 'hashed789', 'owner'),
-      ('davidthewalker', 'david@example.com', 'hashedabc', 'walker'),
-      ('emilyowner', 'emily@example.com', 'hasheddef', 'owner'),
-      ('sarahwalker', 'sarah@example.com', 'hashedghi', 'walker'); -- Sarahwalker MUST be here
-    `);
-    console.log('Users inserted.');
+      // Insert Users first (ENSURING SARAHWALKER AND NEWWALKER ARE INCLUDED)
+      await db.execute(`
+        INSERT INTO Users (username, email, password_hash, role) VALUES
+        ('alice123', 'alice@example.com', 'hashed123', 'owner'),
+        ('bobwalker', 'bob@example.com', 'hashed456', 'walker'),
+        ('carol123', 'carol@example.com', 'hashed789', 'owner'),
+        ('davidthewalker', 'david@example.com', 'hashedabc', 'walker'),
+        ('emilyowner', 'emily@example.com', 'hasheddef', 'owner'),
+        ('sarahwalker', 'sarah@example.com', 'hashedghi', 'walker'),
+        ('newwalker', 'new@example.com', 'hashednew', 'walker'); -- New walker for null average rating
+      `);
+      console.log('Users inserted.');
 
-    // Insert Dogs (using subqueries for owner_id)
-    await db.execute(`
-      INSERT INTO Dogs (owner_id, name, size) VALUES
-      ((SELECT user_id FROM Users WHERE username = 'alice123'), 'Max', 'medium'),
-      ((SELECT user_id FROM Users WHERE username = 'carol123'), 'Bella', 'small'),
-      ((SELECT user_id FROM Users WHERE username = 'alice123'), 'Daisy', 'small'),
-      ((SELECT user_id FROM Users WHERE username = 'emilyowner'), 'Sparky', 'large'),
-      ((SELECT user_id FROM Users WHERE username = 'carol123'), 'Fido', 'medium');
-    `);
-    console.log('Dogs inserted.');
+      // Insert Dogs (using subqueries for owner_id)
+      await db.execute(`
+        INSERT INTO Dogs (owner_id, name, size) VALUES
+        ((SELECT user_id FROM Users WHERE username = 'alice123'), 'Max', 'medium'),
+        ((SELECT user_id FROM Users WHERE username = 'carol123'), 'Bella', 'small'),
+        ((SELECT user_id FROM Users WHERE username = 'alice123'), 'Daisy', 'small'),
+        ((SELECT user_id FROM Users WHERE username = 'emilyowner'), 'Sparky', 'large'),
+        ((SELECT user_id FROM Users WHERE username = 'carol123'), 'Fido', 'medium');
+      `);
+      console.log('Dogs inserted.');
 
-    // Insert Walk Requests
-    await db.execute(`
-      INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status) VALUES
-      ((SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')), '2025-06-10 08:00:00', 30, 'Parklands', 'open'), -- Request 1: Max, open
-      ((SELECT dog_id FROM Dogs WHERE name = 'Bella' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'), -- Request 2: Bella, accepted (can be rated/completed)
-      ((SELECT dog_id FROM Dogs WHERE name = 'Daisy' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')), '2025-06-11 14:00:00', 60, 'City Gardens', 'open'), -- Request 3: Daisy, open
-      ((SELECT dog_id FROM Dogs WHERE name = 'Fido' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')), '2025-06-13 16:00:00', 45, 'Riverwalk Path', 'completed'), -- Request 4: Fido, completed (can be rated/completed)
-      ((SELECT dog_id FROM Dogs WHERE name = 'Sparky' AND owner_id = (SELECT user_id FROM Users WHERE username = 'emilyowner')), '2025-06-12 10:00:00', 30, 'Suburb Park', 'completed'); -- Request 5: Sparky, completed (can be rated/completed)
-    `);
-    console.log('Walk Requests inserted.');
+      -- Insert Walk Requests
+      await db.execute(`
+        INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status) VALUES
+        ((SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')), '2025-06-10 08:00:00', 30, 'Parklands', 'open'), -- Request 1: Max, open
+        ((SELECT dog_id FROM Dogs WHERE name = 'Bella' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'), -- Request 2: Bella, accepted (can be rated/completed)
+        ((SELECT dog_id FROM Dogs WHERE name = 'Daisy' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')), '2025-06-11 14:00:00', 60, 'City Gardens', 'open'), -- Request 3: Daisy, open
+        ((SELECT dog_id FROM Dogs WHERE name = 'Fido' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')), '2025-06-13 16:00:00', 45, 'Riverwalk Path', 'completed'), -- Request 4: Fido, completed (can be rated/completed)
+        ((SELECT dog_id FROM Dogs WHERE name = 'Sparky' AND owner_id = (SELECT user_id FROM Users WHERE username = 'emilyowner')), '2025-06-12 10:00:00', 30, 'Suburb Park', 'completed'); -- Request 5: Sparky, completed (can be rated/completed)
+      `);
+      console.log('Walk Requests inserted.');
 
-    // Insert WalkApplications
-    await db.execute(`
-      INSERT INTO WalkApplications (request_id, walker_id, status) VALUES
-      -- Bob accepted for Bella's walk (Request 2)
-      ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Bella' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')) AND requested_time = '2025-06-10 09:30:00'), (SELECT user_id FROM Users WHERE username = 'bobwalker'), 'accepted'),
-      -- Bob accepted for Fido's walk (Request 4)
-      ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Fido' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')) AND requested_time = '2025-06-13 16:00:00'), (SELECT user_id FROM Users WHERE username = 'bobwalker'), 'accepted'),
-      -- David accepted for Sparky's walk (Request 5)
-      ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Sparky' AND owner_id = (SELECT user_id FROM Users WHERE username = 'emilyowner')) AND requested_time = '2025-06-12 10:00:00'), (SELECT user_id FROM Users WHERE username = 'davidthewalker'), 'accepted'),
-      -- Sarah pending for Max's walk (Request 1)
-      ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')) AND requested_time = '2025-06-10 08:00:00'), (SELECT user_id FROM Users WHERE username = 'sarahwalker'), 'pending'),
-      -- Sarah accepted for Daisy's walk (Request 3 - though WalkRequest status is 'open', for testing ratings, let's assume it became completed later)
-      ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Daisy' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')) AND requested_time = '2025-06-11 14:00:00'), (SELECT user_id FROM Users WHERE username = 'sarahwalker'), 'accepted');
-    `);
-    console.log('Walk Applications inserted.');
+      // Insert WalkApplications
+      await db.execute(`
+        INSERT INTO WalkApplications (request_id, walker_id, status) VALUES
+        -- Bob accepted for Bella's walk (Request 2)
+        ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Bella' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')) AND requested_time = '2025-06-10 09:30:00'), (SELECT user_id FROM Users WHERE username = 'bobwalker'), 'accepted'),
+        -- Bob accepted for Fido's walk (Request 4)
+        ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Fido' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')) AND requested_time = '2025-06-13 16:00:00'), (SELECT user_id FROM Users WHERE username = 'bobwalker'), 'accepted'),
+        -- David accepted for Sparky's walk (Request 5)
+        ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Sparky' AND owner_id = (SELECT user_id FROM Users WHERE username = 'emilyowner')) AND requested_time = '2025-06-12 10:00:00'), (SELECT user_id FROM Users WHERE username = 'davidthewalker'), 'accepted'),
+        -- Sarah pending for Max's walk (Request 1)
+        ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')) AND requested_time = '2025-06-10 08:00:00'), (SELECT user_id FROM Users WHERE username = 'sarahwalker'), 'pending'),
+        -- Sarah accepted for Daisy's walk (Request 3 - though WalkRequest status is 'open', for testing ratings, let's assume it became completed later)
+        ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Daisy' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')) AND requested_time = '2025-06-11 14:00:00'), (SELECT user_id FROM Users WHERE username = 'sarahwalker'), 'accepted');
+      `);
+      console.log('Walk Applications inserted.');
 
-    // Insert WalkRatings
-    await db.execute(`
-      INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments) VALUES
-      -- Bob's ratings
-      ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Bella' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')) AND requested_time = '2025-06-10 09:30:00'), (SELECT user_id FROM Users WHERE username = 'bobwalker'), (SELECT user_id FROM Users WHERE username = 'carol123'), 5, 'Bob was fantastic with Bella!'),
-      ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Fido' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')) AND requested_time = '2025-06-13 16:00:00'), (SELECT user_id FROM Users WHERE username = 'bobwalker'), (SELECT user_id FROM Users WHERE username = 'carol123'), 4, 'Fido had a great walk, no issues.'),
-      -- David's rating
-      ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Sparky' AND owner_id = (SELECT user_id FROM Users WHERE username = 'emilyowner')) AND requested_time = '2025-06-12 10:00:00'), (SELECT user_id FROM Users WHERE username = 'davidthewalker'), (SELECT user_id FROM Users WHERE username = 'emilyowner'), 3, 'Sparky was fine with David, but a bit late.'),
-      -- Sarah's rating (for Daisy's walk)
-      ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Daisy' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')) AND requested_time = '2025-06-11 14:00:00'), (SELECT user_id FROM Users WHERE username = 'sarahwalker'), (SELECT user_id FROM Users WHERE username = 'alice123'), 5, 'Sarah was amazing with Daisy! ');
-    `);
+      // Insert WalkRatings
+      await db.execute(`
+        INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments) VALUES
+        -- Bob's ratings
+        ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Bella' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')) AND requested_time = '2025-06-10 09:30:00'), (SELECT user_id FROM Users WHERE username = 'bobwalker'), (SELECT user_id FROM Users WHERE username = 'carol123'), 5, 'Bob was fantastic with Bella!'),
+        ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Fido' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')) AND requested_time = '2025-06-13 16:00:00'), (SELECT user_id FROM Users WHERE username = 'bobwalker'), (SELECT user_id FROM Users WHERE username = 'carol123'), 4, 'Fido had a great walk, no issues.'),
+        -- David's rating
+        ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Sparky' AND owner_id = (SELECT user_id FROM Users WHERE username = 'emilyowner')) AND requested_time = '2025-06-12 10:00:00'), (SELECT user_id FROM Users WHERE username = 'davidthewalker'), (SELECT user_id FROM Users WHERE username = 'emilyowner'), 3, 'Sparky was fine with David, but a bit late.'),
+        -- Sarah's rating (for Daisy's walk)
+        ((SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Daisy' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')) AND requested_time = '2025-06-11 14:00:00'), (SELECT user_id FROM Users WHERE username = 'sarahwalker'), (SELECT user_id FROM Users WHERE username = 'alice123'), 5, 'Sarah was amazing with Daisy! ');
+      `);
       console.log('Walk Ratings inserted.');
+
       console.log('------------------------- ALL TABLES POPULATED! ----------------------');
+    } else {
+      console.log('Database already populated (Users table not empty). Skipping initial data insertion.');
     }
 
   } catch (err) {
