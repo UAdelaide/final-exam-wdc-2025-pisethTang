@@ -163,20 +163,35 @@ app.get('/api/walkrequests/open', async (req, res) => {
 });
 
 // Route to return a summary of each walker with their average rating and number of completed walks
+// Route to return a summary of each walker with their average rating and number of completed walks
 app.get('/api/walkers/summary', async (req, res) => {
   try {
     const [walkerSummary] = await db.execute(`
       SELECT
-        u.username AS walker_username,
-        COALESCE(COUNT(wr.rating_id), 0) AS total_ratings,
-        COALESCE(AVG(wr.rating), NULL) AS average_rating,
-        COALESCE(COUNT(CASE WHEN wal.status = 'completed' THEN wal.application_id END), 0) AS completed_walks
+          u.username AS walker_username,
+          COALESCE(r.total_ratings, 0) AS total_ratings,
+          COALESCE(r.average_rating, NULL) AS average_rating,
+          COALESCE(c.completed_walks, 0) AS completed_walks
       FROM Users u
-      LEFT JOIN WalkApplications wa ON u.user_id = wa.walker_id
-      LEFT JOIN WalkRequests war ON wa.request_id = war.request_id AND war.status = 'completed'
-      LEFT JOIN WalkRatings wr ON wa.request_id = wr.request_id AND wa.walker_id = wr.walker_id
+      LEFT JOIN (
+          SELECT
+              wr.walker_id,
+              COUNT(wr.rating_id) AS total_ratings,
+              AVG(wr.rating) AS average_rating
+          FROM WalkRatings wr
+          GROUP BY wr.walker_id
+      ) r ON u.user_id = r.walker_id
+      LEFT JOIN (
+          SELECT
+              wa.walker_id,
+              COUNT(DISTINCT war.request_id) AS completed_walks
+          FROM WalkApplications wa
+          JOIN WalkRequests war ON wa.request_id = war.request_id
+          WHERE wa.status = 'accepted' AND war.status = 'completed'
+          GROUP BY wa.walker_id
+      ) c ON u.user_id = c.walker_id
       WHERE u.role = 'walker'
-      GROUP BY u.user_id, u.username
+      GROUP BY u.user_id, u.username -- Grouping by user_id is sufficient due to unique username
       ORDER BY u.username;
     `);
 
@@ -188,13 +203,10 @@ app.get('/api/walkers/summary', async (req, res) => {
 
     res.json(formattedSummary);
   } catch (err) {
-    // console.error('Error fetching walkers summary:', err);
+    console.error('Error fetching walkers summary:', err); // Log the actual error for debugging
     res.status(500).json({ error: 'Failed to fetch walkers summary data' });
   }
 });
-
-
-
 
 
 app.use(express.static(path.join(__dirname, 'public')));
