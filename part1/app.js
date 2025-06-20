@@ -26,7 +26,8 @@ app.use('/users', usersRouter);
 
 
 
-// Following app.js inside the /starthere directory, we will create a MySQL connection and set up the database.
+// Following app.js inside the /starthere directory,
+// we will create a MySQL connection and set up the database.
 let db;
 
 
@@ -131,9 +132,6 @@ app.get('/api/dogs', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch dogs data' });
   }
 });
-
-
-
 
 // Route to return all open walk requests,
 // including the dog name, requested time, location, and owner's username
