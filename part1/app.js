@@ -105,7 +105,6 @@ let db;
       console.log('Walk Requests inserted.');
       console.log('-----------------------------------------------');
     }
-    
 
   } catch (err) {
       console.error('Error setting up database. Ensure MySQL is running and accessible.', err);
