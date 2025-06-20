@@ -93,7 +93,7 @@ let db;
     `);
     console.log('Dogs inserted.');
 
-    -- Insert Walk Requests
+    // Insert Walk Requests
     await db.execute(`
       INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status) VALUES
       ((SELECT dog_id FROM Dogs WHERE name = 'Max' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')), '2025-06-10 08:00:00', 30, 'Parklands', 'open'), -- Request 1: Max, open
@@ -104,7 +104,7 @@ let db;
     `);
     console.log('Walk Requests inserted.');
 
-    -- Insert WalkApplications
+    // Insert WalkApplications
     await db.execute(`
       INSERT INTO WalkApplications (request_id, walker_id, status) VALUES
       -- Bob accepted for Bella's walk (Request 2)
@@ -120,7 +120,7 @@ let db;
     `);
     console.log('Walk Applications inserted.');
 
-    -- Insert WalkRatings
+    // Insert WalkRatings
     await db.execute(`
       INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments) VALUES
       -- Bob's ratings
