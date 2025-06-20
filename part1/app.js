@@ -205,7 +205,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-//  ----------------------- Error handling logic by the Node.js application
+//  ----------------------- Error handling logic by the Node.js application -------------------
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
