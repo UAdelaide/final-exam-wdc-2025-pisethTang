@@ -51,8 +51,11 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
+    cionst user = 
 
     if (user.password_hash !== password) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
 
     res.json({ message: 'Login successful', user: rows[0] });
   } catch (error) {
