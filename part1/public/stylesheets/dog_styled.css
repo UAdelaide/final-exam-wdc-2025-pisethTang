@@ -9,8 +9,6 @@
 
 h1 {
     color: #BBBBBB; /* Low contrast heading */
-    text-align: left; /* Inconsistent with body centering */
-    padding-left: 15px; /* Adds unexpected padding */
 }
 
 
