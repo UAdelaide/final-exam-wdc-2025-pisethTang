@@ -36,6 +36,8 @@ router.post('/', async (req, res) => {
 });
 
 
+// Get walk requests by owner_id
+router.get('/owner/:owner_id', async (req, res) => {
 
 
 // POST an application to walk a dog (from walker)
