@@ -52,6 +52,11 @@
                         if (!response.ok){
                             throw new Error('Network response was not ok');
                         }
+
+                        const dogData = await response.json();
+                        if (dogData.status !== 'success') {
+                            throw new Error('Failed to fetch dog image');
+                        }
                     }catch(err){
                         this.error = err.message;
                         console.error('Error fetching dog image:', err);
