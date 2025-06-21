@@ -49,8 +49,8 @@ router.get('/owner/:owner_id', async (req, res) => {
       JOIN Users u ON d.owner_id = u.user_id
       WHERE d.owner_id = ?
       ORDER BY wr.requested_time DESC
-        `, [ownerId]);
-        res.json(rows);
+    `, [ownerID]);
+      res.json(rows);
   } catch(error){
             console.error(`SQL Error (GET /owner/${ownerID}):`, error);
         res.status(500).json({ error: 'Failed to fetch walks for owner.' });
