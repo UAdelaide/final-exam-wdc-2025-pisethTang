@@ -62,8 +62,7 @@ router.post('/login', async (req, res) => {
       role: user.role
     };
 
-    // Set session cookie
-    
+    req.session.user = userInfo;
     res.json({ message: 'Login successful', user: rows[0] });
   } catch (error) {
     res.status(500).json({ error: 'Login failed' });
