@@ -1,33 +1,33 @@
-        /* Heavily problematic styling */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #2D2D2D; /* Dark background */
-            color: #808080; /* Grey text - very poor contrast */
-        }
+/* Heavily problematic styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #2D2D2D; /* Dark background */
+    color: #808080; /* Grey text - very poor contrast */
+}
 
 
 
-        .main-container {
-            width: 1200px; /* Fixed width, will cause horizontal scroll on smaller screens */
-            border: 1px solid #505050; /* Subtle but present border */
-            background-color: #1A1A1A; /* Even darker background */
-            position: relative;
-        }
+.main-container {
+    width: 1200px; /* Fixed width, will cause horizontal scroll on smaller screens */
+    border: 1px solid #505050; /* Subtle but present border */
+    background-color: #1A1A1A; /* Even darker background */
+    position: relative;
+}
 
 
 
-        h1 {
-            font-size: 2.5em;
-            color: #BBBBBB; /* Low contrast heading */
-            margin-bottom: 10px; /* Reduced margin */
-            text-align: left; /* Inconsistent with body centering */
-            padding-left: 15px; /* Adds unexpected padding */
-            font-weight: normal; /* Blends with paragraph text */
-        }
+h1 {
+    font-size: 2.5em;
+    color: #BBBBBB; /* Low contrast heading */
+    margin-bottom: 10px; /* Reduced margin */
+    text-align: left; /* Inconsistent with body centering */
+    padding-left: 15px; /* Adds unexpected padding */
+    font-weight: normal; /* Blends with paragraph text */
+}
 
-        .dog-section {
-            display: flex;
-        }
+.dog-section {
+    display: flex;
+}
 
         .content-box {
             flex: 0 0 45%; /* Two columns, but not responsive */
