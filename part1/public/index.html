@@ -16,7 +16,7 @@
             <div v-if="loading">Awaiting transmission of dog data ... </div>
             <div v-else-if="error">Data cannot be sent {{ error }}</div>
             <div v-else>
-                <img src="somehwere" :src="dogImageUrl" alt="nothing-here" title="Click for a different dog." @click="fetchDogImage">
+                <img :src="dogImageUrl" alt="nothing-here" title="Click for a different dog." @click="fetchDogImage">
                 <p>Origin: {{ dogBreed || 'Unknown'}}</p>
             </div>
 
