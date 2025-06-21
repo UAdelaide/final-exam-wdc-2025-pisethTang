@@ -5,4 +5,8 @@ var rputer = express.Router();
 
 
 
-router.get('/');
+router.get('/dogs', async (req, res) => {
+
+});
+
+
