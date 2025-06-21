@@ -14,6 +14,7 @@
       <button type="button" @click="logout" class="btn btn-danger">Logout</button>
     </div>
 
+
     <!-- Walk request form -->
     <div class="card mb-4">
       <div class="card-header bg-primary text-white">
@@ -23,7 +24,6 @@
         <form @submit.prevent="submitWalkRequest">
           <div class="mb-3">
             <label for="dogSelect" class="form-label">Select Your Dog</label>
-            <!-- Replaced input type="number" with select dropdown -->
             <select v-model="form.dog_id" id="dogSelect" class="form-select" required>
               <option value="" disabled>-- Select your dog --</option>
               <option v-for="dog in dogs" :key="dog.dog_id" :value="dog.dog_id">{{ dog.name }}</option>
@@ -77,18 +77,17 @@
     createApp({
       setup() {
         const form = ref({
-          dog_id: '', // Will store the selected dog's ID
+          dog_id: '', // stores the selected dog ID
           requested_time: '',
           duration_minutes: '',
           location: ''
         });
 
         const walks = ref([]);
-        const dogs = ref([]); // New reactive variable to store owner's dogs
         const message = ref('');
         const error = ref('');
+        const dogs = ref([]); // holds the list of dogs
 
-        // Function to load the dogs owned by the logged-in user
         async function loadOwnerDogs(ownerId) {
           try {
             const res = await fetch(`/api/users/${ownerId}/dogs`);
@@ -97,48 +96,18 @@
               throw new Error(errorData.error || 'Failed to load dogs for owner');
             }
             dogs.value = await res.json();
-            // Automatically select the first dog if available
-            if (dogs.value.length > 0) {
-              form.value.dog_id = dogs.value[0].dog_id;
-            }
           } catch (err) {
             error.value = 'Failed to load your dogs: ' + err.message;
             console.error('Error loading owner dogs:', err);
           }
         }
 
-        // Modified loadWalks to first get ownerId, then fetch dogs and walks
         async function loadWalks() {
           try {
-            // 1. Fetch the current user's session data to get their user_id
-            const userRes = await fetch('/api/users/me');
-            if (!userRes.ok) {
-              // If not logged in or session expired, redirect to login
-              window.location.href = '/';
-              return;
-            }
-            const userData = await userRes.json();
-            const ownerId = userData.userId; // Get userId from the session data
-
-            // 2. Call loadOwnerDogs with the fetched ownerId
-            if (ownerId) {
-                await loadOwnerDogs(ownerId); // Await this to ensure dogs are loaded before potentially using them
-            } else {
-                error.value = "Could not determine owner ID from session.";
-                console.error("Owner ID not found in session for loading dogs/walks.");
-            }
-
-            // 3. Fetch owner's specific walks
-            // Use the ownerId to fetch walks specific to this owner
-            const res = await fetch(`/api/walks/owner/${ownerId}`);
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.error || 'Failed to load walk requests for owner');
-            }
+            const res = await fetch('/api/walks');
             walks.value = await res.json();
           } catch (err) {
-            error.value = 'Failed to load walk requests: ' + err.message;
-            console.error('Error loading walks:', err);
+            error.value = 'Failed to load walk requests';
           }
         }
 
@@ -161,14 +130,14 @@
               duration_minutes: '',
               location: ''
             };
-            loadWalks(); // Reload walks to see the new request
+            loadWalks();
           } catch (err) {
             error.value = err.message;
             message.value = '';
-            console.error('Error submitting walk request:', err);
           }
         }
 
+        // Logging out of the current dashboard and redirecting to the login page
         async function logout(){
           try{
             const response = await fetch('/api/users/logout', {
@@ -177,29 +146,27 @@
             });
 
             if (response.ok){
-              window.location.href = '/';
+              window.location.href = '/'; // Redirect to the login page after logging out
             }else{
               const errorData = await response.json();
-              console.error('Logout failed:', errorData.message || 'Unknown error');
-              alert("Please try again!");
+              alert("Please try again!"); // Using alert temporarily for feedback
+              throw new Error(errorData.message || 'Logout failed');
             }
 
           } catch(err){
             console.error('Logout failed:', err);
-            alert('Network error during logout. Please check your connection.');
           }
         }
-
         onMounted(() => {
-          loadWalks(); // This will now handle fetching user ID and then dogs
+          loadWalks();
         });
 
         return {
           form,
           walks,
-          dogs, // Make dogs available to the template
           message,
           error,
+          dogs,
           submitWalkRequest,
           logout
         };
