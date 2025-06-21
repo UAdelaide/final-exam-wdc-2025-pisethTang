@@ -17,17 +17,16 @@ h1 {
 .content-box {
     flex: 0 0 45%; /* Two columns, but not responsive */
     padding: 10px;
+    background-color: #252525;
     color: #C0C0C0; /* Better contrast here, inconsistent with body */
     text-align: justify; /* Justified text */
-    margin: 10px; /* Space between boxes */
-    box-sizing: border-box; /* Include padding/border in width */
     overflow-y: scroll; /* Forces vertical scroll for short content */
     height: 250px; /* Fixed height, will cause overflow */
 }
+
 img {
     max-width: 90%; /* Not 100%, responsiveness issue */
     margin-bottom: 10px;
-    filter: blur(1px) contrast(200%); /* Subtle, unhelpful filter */
     /*cursor: pointer; Indicates clickability */
 }
 
