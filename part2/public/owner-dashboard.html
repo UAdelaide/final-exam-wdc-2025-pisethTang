@@ -88,8 +88,18 @@
         const error = ref('');
         const dogs = ref([]); // holds the list of dogs
 
-        async function loadOwnerDogs(){
-          
+        async function loadOwnerDogs(ownerId) {
+          try {
+            const res = await fetch(`/api/users/${ownerId}/dogs`);
+            if (!res.ok) {
+              const errorData = await res.json();
+              throw new Error(errorData.error || 'Failed to load dogs for owner');
+            }
+            dogs.value = await res.json();
+          } catch (err) {
+            error.value = 'Failed to load your dogs: ' + err.message;
+            console.error('Error loading owner dogs:', err);
+          }
         }
 
         async function loadWalks() {
