@@ -68,7 +68,10 @@
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify(this.loginForm)
+              body: JSON.stringify({
+                username: this.loginForm.username, // Use the username from the form
+                password: this.loginForm.password // Use the password from the form
+              })
             });
 
             const data = await response.json();
