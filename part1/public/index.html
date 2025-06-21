@@ -48,7 +48,8 @@
                     this.error = null;
 
                     try{
-                        
+                        const response = await fetch('https://dog.ceo/api/breeds/image/random');
+                        if (!)
                     }catch(err){
                         this.error = err.message;
                         console.error('Error fetching dog image:', err);
