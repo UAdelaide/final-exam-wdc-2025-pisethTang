@@ -46,6 +46,12 @@
                 async fetchDogImage(){
                     this.loading = true;
                     this.error = null;
+
+                    try{
+
+                    }catch(err){
+                        this.error = err.message;
+                    }
                 }
             }
         });
