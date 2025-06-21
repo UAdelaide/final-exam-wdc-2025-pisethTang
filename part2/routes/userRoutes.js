@@ -64,7 +64,6 @@ router.post('/login', async (req, res) => {
 
         // --- Login Successful ---
         // Store necessary user info in the session
-        // This 'user' object in session will be used by requireRole middleware
         req.session.user = {
             user_id: user.user_id,
             username: user.username,
