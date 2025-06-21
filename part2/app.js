@@ -59,7 +59,20 @@ app.use('/api/users', userRoutes);
 
 
 
-
+// Route to return a list of all dogs with their size and owner
+app.get('/api/dogs', async (req, res) => {
+    try {
+        const [rows] = await db.query(`
+            SELECT d.dog_id, d.name, d.size, u.username AS owner_name
+            FROM Dogs d
+            JOIN Users u ON d.owner_id = u.user_id
+        `);
+        res.json(rows);
+    } catch (error) {
+        console.error('SQL Error:', error);
+        res.status(500).json({ error: 'Failed to fetch dogs' });
+    }
+});
 
 
 
