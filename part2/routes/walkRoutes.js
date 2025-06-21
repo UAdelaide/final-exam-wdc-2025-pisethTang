@@ -41,7 +41,10 @@ router.get('/owner/:owner_id', async (req, res) => {
   const ownerID = req.params.owner_id;
 
 
-  
+  try{
+
+  } catch(error){
+  }
 });
 
 
