@@ -127,7 +127,9 @@
               headers: { 'Content-Type': 'application/json' }
             });
 
-            if ()
+            if (response.ok){
+              window.location.href = '/'; // Redirect to the home page after logout
+            }
 
           } catch(err){
             console.error('Logout failed:', err);
