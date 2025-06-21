@@ -36,7 +36,6 @@ router.post('/', async (req, res) => {
 });
 
 
-
 // POST an application to walk a dog (from walker)
 router.post('/:id/apply', async (req, res) => {
   const requestId = req.params.id;
@@ -58,6 +57,26 @@ router.post('/:id/apply', async (req, res) => {
   } catch (error) {
     console.error('SQL Error:', error);
     res.status(500).json({ error: 'Failed to apply for walk' });
+  }
+});
+
+
+// GET walk requests for a specific owner
+router.get('/owner/:id', async (req, res) => {
+  const ownerId = req.params.id;
+
+  try {
+    const [rows] = await db.query(`
+      SELECT wr.*, d.name AS dog_name, d.size
+      FROM WalkRequests wr
+      JOIN Dogs d ON wr.dog_id = d.dog_id
+      WHERE d.owner_id = ? AND wr.status != 'accepted'
+    `, [ownerId]);
+
+    res.json(rows);
+  } catch (error) {
+    // console.error('SQL Error:', error);
+    res.status(500).json({ error: 'Failed to fetch owner walk requests' });
   }
 });
 
