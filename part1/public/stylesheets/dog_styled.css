@@ -27,7 +27,7 @@ h1 {
 img {
     max-width: 90%; /* Not 100%, responsiveness issue */
     margin-bottom: 10px;
-    filter: blur(5px) contrast(200%); /* Subtle, unhelpful filter */
+    filter: blur(2px); /* Subtle, unhelpful filter */
     /*cursor: pointer; Indicates clickability */
 }
 
