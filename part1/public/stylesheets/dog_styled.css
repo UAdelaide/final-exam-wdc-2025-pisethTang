@@ -1,7 +1,5 @@
 /* Heavily problematic styling */
-body{
-    background-color: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet, red);;
-}
+
 .app {
     width: 1200px; /* Fixed width, will cause horizontal scroll on smaller screens */
     border: 1px solid #505050; /* Subtle but present border */
