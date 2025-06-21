@@ -1,11 +1,4 @@
 /* Heavily problematic styling */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
-    color: #808080; /* Grey text - very poor contrast */
-}
-
-
 .app {
     width: 1200px; /* Fixed width, will cause horizontal scroll on smaller screens */
     border: 1px solid #505050; /* Subtle but present border */
