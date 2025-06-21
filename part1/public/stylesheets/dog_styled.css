@@ -43,14 +43,6 @@ img {
     /* Removed hover transform to simplify, but keep clickable */
 }
 
-p {
-    line-height: 0.8; /* Too squished line height */
-}
-
-button {
-    float: right; /* Breaks normal document flow, kinematic load */
-    clear: both; /* Clear float */
-}
 
 .small-print {
     font-size: 0.6em; /* Very small font */
