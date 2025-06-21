@@ -56,8 +56,7 @@
                         const dogData = await response.json();
                         if (dogData.status === 'success'){
                             this.dogImageUrl = dogData.message;
-                            const breedMatch = this.dogImageUrl.match(/breeds\/([^/]+)/);
-                            this.dogBreed = breedMatch ? breedMatch[1] : 'Unknown';
+                            const parts = data
                         } else {
                             throw new Error('Failed to fetch dog image');
                         }
