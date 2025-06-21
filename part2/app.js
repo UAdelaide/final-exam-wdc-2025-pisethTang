@@ -16,13 +16,26 @@ app.use(session({
     cookie: { secure: false } // set to true if using HTTPS
 }));
 
-
-
-
-
 // Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
