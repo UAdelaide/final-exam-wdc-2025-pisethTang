@@ -102,7 +102,7 @@ router.post('/logout', (req, res) => {
 });
 
 
-// This route uses the userId from the URL parameter to fetch dogs.
+// Uses the userId from the URL parameter to fetch dogs.
 router.get('/:userId/dogs', async (req, res) => {
     const ownerId = req.params.userId;
     try {
