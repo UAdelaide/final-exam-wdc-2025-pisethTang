@@ -16,7 +16,7 @@
     <!-- Login form to our webpage using Vue3 -->
      <form @submit.prevent="login_form">
       <label for="username">Username:</label>
-      <input type="text">
+      <input type="text" v-model="loginForm.username" >
 
       <label for="password">Password:</label>
      </form>
