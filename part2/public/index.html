@@ -8,52 +8,61 @@
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body class="bg-light">
+
   <div id="app" class="container py-5">
     <h1 class="mb-4 text-primary">{{ message }}</h1>
     <p class="lead">Connect with trusted walkers for your beloved dog!</p>
 
-    <!-- Login form to our webpage using Vue3 (with some styling using bootstrap)-->
+    <!-- Login form to our webpage using Vue3 -->
     <div class="card p-4 shadow-sm mb-4">
       <h3 class="card-title text-center mb-4">Login</h3>
-      <form @submit.prevent="login">
-
+      <form @submit.prevent="login"> <!-- Changed login_form to login here -->
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" v-model="loginForm.username" id="username" class="form-control" placeholder="Enter your username" required>
         </div>
-
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input type="password" v-model="loginForm.password" id="password" class="form-control" placeholder="Enter your password" required>
         </div>
-
         <div class="d-grid">
           <button type="submit" class="btn btn-primary">Log In</button>
         </div>
       </form>
+      <!-- Display general messages or errors -->
+      <div v-if="localMessage" class="alert alert-info mt-3" role="alert">{{ localMessage }}</div>
+      <div v-if="localError" class="alert alert-danger mt-3" role="alert">{{ localError }}</div>
     </div>
 
-    <a href="owner-dashboard.html" class="btn btn-outline-primary me-2">Owner Dashboard</a>
-    <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard</a>
+    <!-- Original dashboard links (can be removed later if login is mandatory) -->
+    <div class="text-center mt-4">
+        <a href="owner-dashboard.html" class="btn btn-outline-primary me-2">Owner Dashboard (Direct Access)</a>
+        <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard (Direct Access)</a>
+    </div>
   </div>
 
   <script>
-    const { createApp } = Vue;
+    const { createApp, ref } = Vue; // Import ref for reactive variables
+
     createApp({
       data() {
         return {
           message: 'Welcome to the Dog Walking Service!',
           loginForm: {
-            username: '',
+            username: '', // Keep username, as per your form
             password: ''
           },
-          Dogs: []
+          localMessage: '', // For success/info messages on the page
+          localError: ''    // For error messages on the page
         };
       },
 
-      methods:{
-        async login(){
-          try{
+      methods: {
+        async login() { // Method name fixed to 'login'
+          this.localMessage = ''; // Clear previous messages
+          this.localError = '';   // Clear previous errors
+
+          try {
             const response = await fetch("/api/users/login", {
               method: 'POST',
               headers: {
@@ -62,22 +71,28 @@
               body: JSON.stringify(this.loginForm)
             });
 
-            
             const data = await response.json();
 
-            // Check if the login was successful
-            if(response.ok){
+            // Check if the login was successful based on server response status
+            if (response.ok) {
+              this.localMessage = data.message;
               // Redirect to the appropriate dashboard
-              if(data.role === 'owner'){
+              if (data.role === 'owner') {
                 window.location.href = 'owner-dashboard.html';
-              } else if(data.role === 'walker'){
+              } else if (data.role === 'walker') {
                 window.location.href = 'walker-dashboard.html';
+              } else {
+                this.localError = 'Unknown user role. Login successful but cannot redirect.';
               }
             } else {
-              throw new Error(data.message || 'Login failed');
+              // Server returned an error status (e.g., 401 Unauthorized)
+              // Display the error message from the server response
+              throw new Error(data.message || 'Login failed due to unknown error.');
             }
-          } catch(error){
-            alert(error.message);
+          } catch (error) {
+            this.localError = 'Login failed: ' + error.message;
+            this.localMessage = '';
+            console.error('Login error:', error);
           }
         }
       }
