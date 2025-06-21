@@ -95,7 +95,8 @@ router.post('/logout', (req, res) => {
     }
 
 
-    // 
+    // Session destroyed, cookie cleared by express-session (if no error)
+    // Redirecting on client-s
   });
 });
 
