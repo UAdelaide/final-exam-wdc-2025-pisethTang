@@ -39,37 +39,56 @@ router.get('/me', (req, res) => {
 
 // POST login (dummy version)
 router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
+    const { username, password } = req.body; // Expecting username and plain password from frontend
 
-  try {
-    const [rows] = await db.query(`
-      SELECT user_id, username, email, role FROM Users
-      WHERE username = ? AND password_hash = ?
-    `, [username, password]);
-
-    if (rows.length === 0) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+    // Basic validation
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Username and password are required.' });
     }
 
-    // If a user is found in the database, store the user in the session.
-    const user = rows[0];
+    try {
+        // 1. Fetch user by username ONLY
+        const [users] = await db.execute(
+            'SELECT user_id, username, password_hash, role FROM Users WHERE username = ?',
+            [username]
+        );
 
-    if (user.password_hash !== password) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+        const user = users[0]; // Get the first user found (if any)
+
+        // 2. Check if user exists AND if the provided plain 'password' matches the stored 'password_hash'
+        // This is the direct string comparison you require.
+        if (!user || user.password_hash !== password) {
+            return res.status(401).json({ message: 'Invalid username or password.' });
+        }
+
+        // --- Login Successful ---
+        // Store necessary user info in the session
+        // This 'user' object in session will be used by requireRole middleware
+        req.session.user = {
+            user_id: user.user_id,
+            username: user.username,
+            role: user.role
+        };
+
+        // Regenerate session ID to prevent session fixation attacks (good security practice)
+        req.session.regenerate((err) => {
+            if (err) {
+                console.error('Session regeneration error during login (POST /login):', err);
+                return res.status(500).json({ message: 'Failed to create session.' });
+            }
+            // Send back success message and role for client-side redirection
+            res.status(200).json({
+                success: true,
+                message: 'Login successful!',
+                role: user.role, // Send back the role for client-side redirection
+                userId: user.user_id // Optionally send userId back
+            });
+        });
+
+    } catch (error) {
+        console.error('Database error during login (POST /login):', error);
+        res.status(500).json({ message: 'Internal server error during login.' });
     }
-
-    // Store user info in session
-    const userInfo = {
-      user_id: user.user_id,
-      username: user.username,
-      role: user.role
-    };
-
-    req.session.user = userInfo;
-    res.json({ message: 'Login successful', user: userInfo });
-  } catch (error) {
-    res.status(500).json({ error: 'Login failed' });
-  }
 });
 
 module.exports = router;
