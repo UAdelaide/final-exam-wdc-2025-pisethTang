@@ -16,16 +16,8 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'dog-service-secret-key', // session secret
     resave: false, // don't save session if unmodified
     saveUninitialized: true, // save uninitialized sessions
-    cookie: { secure: false} // set to true if using HTTPS
+    cookie: { secure: false } // set to true if using HTTPS
 }));
-
-
-
-
-
-
-
-
 
 
 
@@ -35,9 +27,6 @@ const userRoutes = require('./routes/userRoutes');
 
 app.use('/api/walks', walkRoutes);
 app.use('/api/users', userRoutes);
-
-
-
 
 
 
