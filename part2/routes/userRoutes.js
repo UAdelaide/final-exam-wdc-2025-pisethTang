@@ -71,20 +71,7 @@ router.post('/login', async (req, res) => {
             role: user.role
         };
 
-        // Regenerate session ID to prevent session fixation attacks (good security practice)
-        req.session.regenerate((err) => {
-            if (err) {
-                console.error('Session regeneration error during login (POST /login):', err);
-                return res.status(500).json({ message: 'Failed to create session.' });
-            }
-            // Send back success message and role for client-side redirection
-            res.status(200).json({
-                success: true,
-                message: 'Login successful!',
-                role: user.role, // Send back the role for client-side redirection
-                userId: user.user_id // Optionally send userId back
-            });
-        });
+
 
     } catch (error) {
         console.error('Database error during login (POST /login):', error);
