@@ -128,7 +128,10 @@
             });
 
             if (response.ok){
-              window.location.href = '/'; // Redirect to the home page after logout
+              window.location.href = '/'; // Redirect to the login page after logging out
+            }else{
+              const errorData = await response.json();
+              throw new Error(errorData.message || 'Logout failed');
             }
 
           } catch(err){
