@@ -15,15 +15,18 @@
     <!-- Login form to our webpage using Vue3 (with some styling using bootstrap)-->
     <div class="card p-4 shadow-sm mb-4">
       <h3 class="card-title text-center mb-4">Login</h3>
-      <form @submit.prevent="login"> <!-- Changed login_form to login to match method name -->
+      <form @submit.prevent="login_form"> <!-- Changed login_form to login to match method name -->
+
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" v-model="loginForm.username" id="username" class="form-control" placeholder="Enter your username" required>
         </div>
+
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
           <input type="password" v-model="loginForm.password" id="password" class="form-control" placeholder="Enter your password" required>
         </div>
+
         <div class="d-grid">
           <button type="submit" class="btn btn-primary">Log In</button>
         </div>
