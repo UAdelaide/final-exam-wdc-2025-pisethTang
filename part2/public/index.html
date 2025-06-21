@@ -63,7 +63,7 @@
         </tr>
       </tbody>
     </table>
-    
+
   <script>
     const { createApp, ref } = Vue; // Import ref for reactive variables
 
@@ -119,6 +119,28 @@
             this.localError = 'Login failed: ' + error.message;
             this.localMessage = '';
             console.error('Login error:', error);
+          }
+        }
+
+
+
+       // Fetch all dogs and assign a random dogs img
+        async loadDogs(){
+          try {
+            const res = await fetch('/api/dogs');
+            const dogList = await res.json(); // Parse Json array of dog object
+
+            // For each dog, get a random image and assign it
+            for (let dog of dogList){
+              const imgRes = await fetch('https://dog.ceo/api/breeds/image/random');
+              const imgData = await imgRes.json();
+              dog.photo = imgData.message; // Assign image to dog object
+            }
+
+            // Update with modified list
+            this.dogs = dogList;
+          } catch (err){
+            console.error('Failed to load dogs:', error);
           }
         }
       }
