@@ -1,0 +1,72 @@
+        /* Heavily problematic styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2D2D2D; /* Dark background */
+            color: #808080; /* Grey text - very poor contrast */
+        }
+
+
+
+        .main-container {
+            width: 1200px; /* Fixed width, will cause horizontal scroll on smaller screens */
+            border: 1px solid #505050; /* Subtle but present border */
+            background-color: #1A1A1A; /* Even darker background */
+            position: relative;
+        }
+
+
+
+        h1 {
+            font-size: 2.5em;
+            color: #BBBBBB; /* Low contrast heading */
+            margin-bottom: 10px; /* Reduced margin */
+            text-align: left; /* Inconsistent with body centering */
+            padding-left: 15px; /* Adds unexpected padding */
+            font-weight: normal; /* Blends with paragraph text */
+        }
+
+        .dog-section {
+            display: flex;
+        }
+
+        .content-box {
+            flex: 0 0 45%; /* Two columns, but not responsive */
+            min-height: 300px;
+            border: 1px solid #404040;
+            padding: 10px;
+            background-color: #252525;
+            color: #C0C0C0; /* Better contrast here, inconsistent with body */
+            text-align: justify; /* Justified text */
+            margin: 10px; /* Space between boxes */
+            box-sizing: border-box; /* Include padding/border in width */
+            overflow-y: scroll; /* Forces vertical scroll for short content */
+            height: 250px; /* Fixed height, will cause overflow */
+        }
+
+        img {
+            max-width: 90%; /* Not 100%, responsiveness issue */
+            height: auto;
+            /* border: 2px solid #555555; */
+            margin-bottom: 10px;
+            filter: blur(1px) contrast(200%); /* Subtle, unhelpful filter */
+            /*cursor: pointer; Indicates clickability */
+            /* Removed hover transform to simplify, but keep clickable */
+        }
+
+        p {
+            line-height: 0.8; /* Too squished line height */
+        }
+
+        button {
+            float: right; /* Breaks normal document flow, kinematic load */
+            clear: both; /* Clear float */
+        }
+
+        .small-print {
+            font-size: 0.6em; /* Very small font */
+            color: #707070; /* Extremely low contrast */
+            margin-top: 10px;
+            text-align: justify; /* Justified for small text, bad */
+            line-height: 1.2;
+            word-spacing: 0.1em; /* Increased word spacing */
+        }
