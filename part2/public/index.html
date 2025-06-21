@@ -31,7 +31,12 @@
     createApp({
       data() {
         return {
-          message: 'Welcome to the Dog Walking Service!'
+          message: 'Welcome to the Dog Walking Service!',
+          loginForm: {
+            username: '',
+            password: ''
+          },
+          Dogs: []
         };
       }
     }).mount('#app');
