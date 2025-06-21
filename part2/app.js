@@ -8,6 +8,10 @@ const db = require('./models/db');
 
 const app = express();
 
+// Middleware
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '/public')));
+
 // Session setup
 app.use(session({
     secret: process.env.SESSION_SECRET || 'dog-service-secret-key', // session secret
@@ -15,10 +19,6 @@ app.use(session({
     saveUninitialized: true, // save uninitialized sessions
     cookie: { secure: false } // set to true if using HTTPS
 }));
-
-// Middleware
-app.use(express.json());
-app.use(express.static(path.join(__dirname, '/public')));
 
 
 
