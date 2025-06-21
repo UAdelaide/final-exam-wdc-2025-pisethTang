@@ -35,7 +35,6 @@ img {
     margin-bottom: 10px;
     filter: blur(1px) contrast(200%); /* Subtle, unhelpful filter */
     /*cursor: pointer; Indicates clickability */
-    /* Removed hover transform to simplify, but keep clickable */
 }
 
 .small-print {
