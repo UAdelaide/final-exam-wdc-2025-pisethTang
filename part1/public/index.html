@@ -43,7 +43,10 @@
             },
 
             methods:{
-                async fetchDogImage();
+                async fetchDogImage(){
+                    this.loading = true;
+                    this.error = null;
+                }
             }
         });
     </script>
