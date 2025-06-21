@@ -37,6 +37,10 @@ app.get('/walker-dashboard.html', requireRole('walker'), (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'walker-dashboard.html'));
 });
 
+app.get('/owner-dashboard.html', requireRole('owner'), (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'owner-dashboard.html'));
+});
+
 
 
 
