@@ -26,14 +26,14 @@ app.use(express.static(path.join(__dirname, '/public')));
 function requireRole(role){
     return function(req, res, next) {
         if (!req.session.user || req.session.user.role !== role) {
-            return res.redirect();
+            return res.redirect('/');
         }
         next();
     };
 }
 
 
-
+app.get('/walker-dashboard.html');
 
 
 
