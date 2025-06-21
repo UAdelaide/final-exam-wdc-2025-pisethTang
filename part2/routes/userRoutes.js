@@ -56,14 +56,14 @@ router.post('/login', async (req, res) => {
     if (user.password_hash !== password) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-    req.session.user = {
+    const userInfo = {
       user_id: user.user_id,
       username: user.username,
       role: user.role
     };
 
     req.session.user = userInfo;
-    res.json({ message: 'Login successful', user: rows[0] });
+    res.json({ message: 'Login successful', user: userInfo });
   } catch (error) {
     res.status(500).json({ error: 'Login failed' });
   }
