@@ -51,7 +51,11 @@
               body: JSON.stringify(this.loginForm)
             });
 
-            // 
+            //
+            const data = await response.json();
+
+            // Check if the login was successful
+            
           } catch(error){
             alert("Login failed: " + error.message);
           }
