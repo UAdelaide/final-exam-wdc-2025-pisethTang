@@ -56,7 +56,8 @@
                         const dogData = await response.json();
                         if (dogData.status === 'success'){
                             this.dogImageUrl = dogData.message;
-                            const parts = data
+                            const parts = dogData.message.split('/');
+                            this.dogBreed = parts[parts.length - 2]; 
                         } else {
                             throw new Error('Failed to fetch dog image');
                         }
