@@ -15,7 +15,7 @@
     <!-- Login form to our webpage using Vue3 (with some styling using bootstrap)-->
     <div class="card p-4 shadow-sm mb-4">
       <h3 class="card-title text-center mb-4">Login</h3>
-      <form @submit.prevent="login_form"> 
+      <form @submit.prevent="login_form">
 
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
@@ -52,7 +52,7 @@
       },
 
       methods:{
-        async login_form(){
+        async login(){
           try{
             const response = await fetch("/api/users/login", {
               method: 'POST',
