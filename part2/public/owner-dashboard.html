@@ -96,47 +96,18 @@
               throw new Error(errorData.error || 'Failed to load dogs for owner');
             }
             dogs.value = await res.json();
-            // Automatically select the first dog if available
-            if (dogs.value.length > 0) {
-              form.value.dog_id = dogs.value[0].dog_id;
-            }
           } catch (err) {
             error.value = 'Failed to load your dogs: ' + err.message;
             console.error('Error loading owner dogs:', err);
           }
         }
 
- async function loadWalks() {
+        async function loadWalks() {
           try {
-            // 1. Fetch the current user's session data to get their user_id
-            const userRes = await fetch('/api/users/me');
-            if (!userRes.ok) {
-              // If not logged in or session expired, redirect to login
-              window.location.href = '/';
-              return;
-            }
-            const userData = await userRes.json();
-            const ownerId = userData.userId; // Get userId from the session data
-
-            // 2. Call loadOwnerDogs with the fetched ownerId
-            if (ownerId) {
-                await loadOwnerDogs(ownerId); // Await this to ensure dogs are loaded before potentially using them
-            } else {
-                error.value = "Could not determine owner ID from session.";
-                console.error("Owner ID not found in session for loading dogs/walks.");
-            }
-
-            // 3. Fetch owner's specific walks
-            // Use the ownerId to fetch walks specific to this owner
-            const res = await fetch(`/api/walks/owner/${ownerId}`);
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.error || 'Failed to load walk requests for owner');
-            }
+            const res = await fetch('/api/walks');
             walks.value = await res.json();
           } catch (err) {
-            error.value = 'Failed to load walk requests: ' + err.message;
-            console.error('Error loading walks:', err);
+            error.value = 'Failed to load walk requests';
           }
         }
 
