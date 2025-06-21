@@ -81,7 +81,7 @@ router.post('/login', async (req, res) => {
 
 
     } catch (error) {
-        console.error('Database error during login (POST /login):', error);
+        // console.error('Database error during login (POST /login):', error);
         res.status(500).json({ message: 'Internal server error during login.' });
     }
 });
