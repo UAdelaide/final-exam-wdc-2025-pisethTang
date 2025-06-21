@@ -3,7 +3,6 @@
     width: 1200px; /* Fixed width, will cause horizontal scroll on smaller screens */
     border: 1px solid #505050; /* Subtle but present border */
     background-color: #1A1A1A; /* Even darker background */
-    position: relative;
 }
 
 
