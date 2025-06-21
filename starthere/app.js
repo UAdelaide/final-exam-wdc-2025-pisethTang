@@ -69,9 +69,11 @@ app.get('/', async (req, res) => {
   }
 });
 
-app.use("/index.html", (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// app.use("/index.html", (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// });
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
