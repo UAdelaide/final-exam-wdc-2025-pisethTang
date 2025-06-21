@@ -5,15 +5,16 @@ const session = require('express-session');
 const db = require('./models/db');
 
 
+
+const app = express();
+
 // Session setup
 app.use(session({
-    secret: 'dog-walking-secret-key',
-    resave: false,
+    secret: 'dog-walking-secret-key', // session secret
+    resave: false, 
     saveUninitialized: true,
     cookie: { secure: false } // Set to true if using HTTPS
 }));
-
-const app = express();
 
 // Middleware
 app.use(express.json());
