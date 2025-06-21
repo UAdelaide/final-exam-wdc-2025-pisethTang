@@ -24,7 +24,6 @@
         <form @submit.prevent="submitWalkRequest">
           <div class="mb-3">
             <label for="dogSelect" class="form-label">Select Your Dog</label>
-            <!-- Replaced input type="number" with select dropdown -->
             <select v-model="form.dog_id" id="dogSelect" class="form-select" required>
               <option value="" disabled>-- Choose a dog --</option>
               <option v-for="dog in dogs" :key="dog.dog_id" :value="dog.dog_id">{{ dog.name }}</option>
