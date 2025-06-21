@@ -50,8 +50,8 @@ router.get('/owner/:owner_id', async (req, res) => {
     `, [ownerID]);
       res.json(rows);
   } catch(error){
-        console.error(`SQL Error (GET /owner/${ownerID}):`, error);
-        res.status(500).json({ error: 'Failed to fetch walks for owner.' });
+      console.error(`SQL Error (GET /owner/${ownerID}):`, error);
+      res.status(500).json({ error: 'Failed to fetch walks for owner.' });
   }
 });
 
