@@ -55,7 +55,8 @@ router.post('/login', async (req, res) => {
 
         const user = users[0]; // Get the first user found (if any)
 
-        // 2. Check if user exists AND if the provided plain 'password' matches the stored 'password_hash'
+        // 2. Check if user exists AND if the
+        // provided plain 'password' matches the stored 'password_hash'
         // This is the direct string comparison you require.
         if (!user || user.password_hash !== password) {
             return res.status(401).json({ message: 'Invalid username or password.' });
