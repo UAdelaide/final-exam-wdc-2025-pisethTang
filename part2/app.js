@@ -21,6 +21,7 @@ app.use(session({
 
 
 
+
 // Importing routes from separate files (more modular)
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
