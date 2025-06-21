@@ -48,9 +48,12 @@
                     this.error = null;
 
                     try{
-
+                        
                     }catch(err){
                         this.error = err.message;
+                        console.error('Error fetching dog image:', err);
+                    }finally{
+                        this.loading = false;
                     }
                 }
             }
