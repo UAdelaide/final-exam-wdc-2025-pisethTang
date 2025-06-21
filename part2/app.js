@@ -5,7 +5,10 @@ const session = require('express-session');
 const db = require('./models/db');
 
 
-
+// Session setup
+app.use(session({
+    secret
+}));
 
 const app = express();
 
