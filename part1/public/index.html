@@ -37,9 +37,14 @@
                 return {
                     dogImageUrl: '',
                     dogBreed: '',
-                    loading: true
+                    loading: true,
+                    error: null
                 };
             },
+
+            methods:{
+                async fetchDogImage();
+            }
         });
     </script>
 </body>
