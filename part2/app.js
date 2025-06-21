@@ -50,7 +50,7 @@ app.get('/owner-dashboard.html', requireRole('owner'), (req, res) => {
 
 
 
-// Routes
+// Importing routes from separate files (more modular)
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
 
