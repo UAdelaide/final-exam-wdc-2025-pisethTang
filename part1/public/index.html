@@ -34,7 +34,11 @@
         // Using Vue3
         const app = Vue.createApp({
             data(){
-                
+                return {
+                    dogImageUrl: '',
+                    dogBreed: '',
+                    loading: true
+                };
             },
         });
     </script>
