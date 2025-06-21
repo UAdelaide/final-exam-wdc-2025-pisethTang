@@ -8,16 +8,12 @@
 
 
 h1 {
-    font-size: 2.5em;
     color: #BBBBBB; /* Low contrast heading */
-    margin-bottom: 10px; /* Reduced margin */
     text-align: left; /* Inconsistent with body centering */
     padding-left: 15px; /* Adds unexpected padding */
 }
 
-.dog-section {
-    display: flex;
-}
+
 
 .content-box {
     flex: 0 0 45%; /* Two columns, but not responsive */
