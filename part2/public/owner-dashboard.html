@@ -131,7 +131,7 @@
               window.location.href = '/'; // Redirect to the login page after logging out
             }else{
               const errorData = await response.json();
-              alert("Please try again");
+              alert("Please try again!"); // Using alert temporarily for feedback
               throw new Error(errorData.message || 'Logout failed');
             }
 
