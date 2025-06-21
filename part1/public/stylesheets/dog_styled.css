@@ -6,7 +6,6 @@ body {
 }
 
 
-
 .main-container {
     width: 1200px; /* Fixed width, will cause horizontal scroll on smaller screens */
     border: 1px solid #505050; /* Subtle but present border */
@@ -52,14 +51,14 @@ img {
     /* Removed hover transform to simplify, but keep clickable */
 }
 
-        p {
-            line-height: 0.8; /* Too squished line height */
-        }
+p {
+    line-height: 0.8; /* Too squished line height */
+}
 
-        button {
-            float: right; /* Breaks normal document flow, kinematic load */
-            clear: both; /* Clear float */
-        }
+button {
+    float: right; /* Breaks normal document flow, kinematic load */
+    clear: both; /* Clear float */
+}
 
 .small-print {
     font-size: 0.6em; /* Very small font */
