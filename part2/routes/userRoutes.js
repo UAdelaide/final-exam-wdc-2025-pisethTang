@@ -102,6 +102,6 @@ router.post('/logout', (req, res) => {
 });
 
 
-
+// This route uses the userId from the URL parameter to fetch dogs.
 
 module.exports = router;
