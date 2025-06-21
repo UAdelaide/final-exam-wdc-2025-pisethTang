@@ -48,6 +48,7 @@
         const message = ref('');
         const error = ref('');
         const user = 3;
+        const userId = ref(null);
 
         async function loadWalkRequests() {
           try {
@@ -59,6 +60,19 @@
           }
         }
 
+        async function getCurrentUser() {
+          try {
+            const res = await fetch('/api/users/me');
+            if (!res.ok) {
+              throw new Error('Failed to get current user');
+            }
+            const user = await res.json();
+            return user;
+          } catch (err) {
+            error.value = err.message;
+            return null;
+          }
+        }
         async function applyToWalk(requestId) {
           try {
             const res = await fetch(`/api/walks/${requestId}/apply`, {
@@ -78,24 +92,6 @@
           }
         }
 
-        async function applyToWalk(requestId) {
-          try {
-            const res = await fetch(`/api/walks/${requestId}/apply`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ walker_id: walkerID.value }) // Replace user with walkerID value
-            });
-            const result = await res.json();
-
-            if (!res.ok) throw new Error(result.error || 'Application failed');
-            message.value = result.message;
-            error.value = '';
-            await loadWalkRequests();
-          } catch (err) {
-            error.value = err.message;
-            message.value = '';
-          }
-        }
 
         // Logout
         async function logout() {
