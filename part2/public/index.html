@@ -13,25 +13,22 @@
     <p class="lead">Connect with trusted walkers for your beloved dog!</p>
 
     <!-- Login form to our webpage using Vue3 (with some styling using bootstrap)-->
-     <div class="card p-4 shadow-sm mb-4">
-       <form @submit.prevent="login_form">
+    <div class="card p-4 shadow-sm mb-4">
+      <h3 class="card-title text-center mb-4">Login</h3>
+      <form @submit.prevent="login"> <!-- Changed login_form to login to match method name -->
         <div class="mb-3">
-          <label for="username">Username: </label>
-          <input type="text" v-model="loginForm.username" id="username" placeholder="Enter your username here" required>
+          <label for="username" class="form-label">Username</label>
+          <input type="text" v-model="loginForm.username" id="username" class="form-control" placeholder="Enter your username" required>
         </div>
-
         <div class="mb-3">
-          <label for="password">Password: </label>
-          <input type="text" v-model="loginForm.password" id="password" placeholder="Enter your password here" required>
+          <label for="password" class="form-label">Password</label>
+          <input type="password" v-model="loginForm.password" id="password" class="form-control" placeholder="Enter your password" required>
         </div>
-
         <div class="d-grid">
-          <button type="submit" class="btn btn-primary">Login</button>
+          <button type="submit" class="btn btn-primary">Log In</button>
         </div>
-
-        </form>
-
-      </div>
+      </form>
+    </div>
 
     <a href="owner-dashboard.html" class="btn btn-outline-primary me-2">Owner Dashboard</a>
     <a href="walker-dashboard.html" class="btn btn-outline-success">Walker Dashboard</a>
