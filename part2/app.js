@@ -7,7 +7,10 @@ const db = require('./models/db');
 
 // Session setup
 app.use(session({
-    secret
+    secret: 'dog-walking-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
 }));
 
 const app = express();
