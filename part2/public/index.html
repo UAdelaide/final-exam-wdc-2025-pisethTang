@@ -43,7 +43,7 @@
       methods:{
         async login(){
           try{
-            
+            const response = await fetch("/api/users/login");
           } catch(error){
             alert("Login failed: " + error.message);
           }
