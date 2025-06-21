@@ -42,7 +42,11 @@
 
       methods:{
         async login(){
-          
+          try{
+            
+          } catch(error){
+            alert("Login failed: " + error.message);
+          }
         }
       }
     }).mount('#app');
