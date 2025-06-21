@@ -51,11 +51,14 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
+    // If a user is found, check password (dummy check here)
     const user = rows[0];
 
     if (user.password_hash !== password) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
+
+    // Store user info in session
     const userInfo = {
       user_id: user.user_id,
       username: user.username,
