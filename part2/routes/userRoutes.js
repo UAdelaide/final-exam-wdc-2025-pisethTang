@@ -102,18 +102,5 @@ router.post('/logout', (req, res) => {
 });
 
 
-// Uses the userId from the URL parameter to fetch dogs.
-router.get('/:userId/dogs', async (req, res) => {
-    const ownerId = req.params.userId;
-    try {
-        const [dogs] = await db.query(
-            'SELECT dog_id, name FROM Dogs WHERE owner_id = ?',
-            [ownerId]
-        );
-        res.json(dogs);
-    } catch (error) {
-        console.error(`SQL Error (GET /${ownerId}/dogs):`, error);
-        res.status(500).json({ error: 'Failed to fetch dogs for owner.' });
-    }
-});
+
 module.exports = router;
