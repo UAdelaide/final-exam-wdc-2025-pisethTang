@@ -96,6 +96,10 @@
               throw new Error(errorData.error || 'Failed to load dogs for owner');
             }
             dogs.value = await res.json();
+            // Automatically select the first dog if available
+            if (dogs.value.length > 0) {
+              form.value.dog_id = dogs.value[0].dog_id;
+            }
           } catch (err) {
             error.value = 'Failed to load your dogs: ' + err.message;
             console.error('Error loading owner dogs:', err);
