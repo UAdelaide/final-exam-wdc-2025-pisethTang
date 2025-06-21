@@ -14,13 +14,9 @@ h1 {
 }
 
 
-
 .content-box {
     flex: 0 0 45%; /* Two columns, but not responsive */
-    min-height: 300px;
-    border: 1px solid #404040;
     padding: 10px;
-    background-color: #252525;
     color: #C0C0C0; /* Better contrast here, inconsistent with body */
     text-align: justify; /* Justified text */
     margin: 10px; /* Space between boxes */
@@ -35,7 +31,3 @@ img {
     /*cursor: pointer; Indicates clickability */
 }
 
-.small-print {
-    font-size: 0.6em; /* Very small font */
-    color: #707070; /* Extremely low contrast */
-}
