@@ -25,7 +25,10 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 function requireRole(role){
     return function(req, res, next) {
-        if ()
+        if (!req.session.user || req.session.user.role !== role) {
+            return res.redirect();
+        }
+        next();
     };
 }
 
