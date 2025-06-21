@@ -21,10 +21,8 @@ h1 {
 
 .content-box {
     flex: 0 0 45%; /* Two columns, but not responsive */
-    padding: 10px;
     background-color: #252525;
     color: #C0C0C0; /* Better contrast here, inconsistent with body */
-    text-align: justify; /* Justified text */
     overflow-y: scroll; /* Forces vertical scroll for short content */
     height: 250px; /* Fixed height, will cause overflow */
 }
