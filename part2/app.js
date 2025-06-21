@@ -33,7 +33,9 @@ function requireRole(role){
 }
 
 
-app.get('/walker-dashboard.html');
+app.get('/walker-dashboard.html', requireRole('walker'), (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'walker-dashboard.html'));
+});
 
 
 
