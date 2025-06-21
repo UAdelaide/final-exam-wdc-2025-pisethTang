@@ -13,7 +13,6 @@ h1 {
     margin-bottom: 10px; /* Reduced margin */
     text-align: left; /* Inconsistent with body centering */
     padding-left: 15px; /* Adds unexpected padding */
-    font-weight: normal; /* Blends with paragraph text */
 }
 
 .dog-section {
@@ -42,7 +41,6 @@ img {
     /*cursor: pointer; Indicates clickability */
     /* Removed hover transform to simplify, but keep clickable */
 }
-
 
 .small-print {
     font-size: 0.6em; /* Very small font */
