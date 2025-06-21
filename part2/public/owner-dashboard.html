@@ -77,7 +77,7 @@
     createApp({
       setup() {
         const form = ref({
-          dog_id: '',
+          dog_id: '', // stores the selected dog ID
           requested_time: '',
           duration_minutes: '',
           location: ''
@@ -86,6 +86,7 @@
         const walks = ref([]);
         const message = ref('');
         const error = ref('');
+        const dogs = ref([]); // Array to hold the list of dogs
 
         async function loadWalks() {
           try {
