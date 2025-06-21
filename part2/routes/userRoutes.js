@@ -71,6 +71,8 @@ router.post('/login', async (req, res) => {
             role: user.role
         };
 
+        // Send back success message and role for client-side redirection
+        res.status()
 
 
     } catch (error) {
