@@ -51,7 +51,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    // If a user is found, check password (dummy check here)
+    // If a user is found in the database, store the user in the session.
     const user = rows[0];
 
     if (user.password_hash !== password) {
