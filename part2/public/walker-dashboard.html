@@ -80,7 +80,25 @@
 
 
         // Logout
-   
+        async function logout() {
+            try {
+                const response = await fetch('/api/users/logout', {
+                    method: 'POST', // Use POST for logout for security reasons
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (response.ok) {
+                    window.location.href = '/'; // Redirect to the login page (index.html)
+                } else {
+                    const errorData = await response.json();
+                    console.error('Logout failed:', errorData.message || 'Unknown error');
+                    alert('Logout failed: ' + (errorData.message || 'Please try again.')); // Using alert temporarily for feedback
+                }
+            } catch (err) {
+                console.error('Network error during logout:', err);
+                alert('Network error during logout. Please check your connection.'); // Using alert temporarily
+            }
+        }
         onMounted(() => {
           loadWalkRequests();
         });
