@@ -61,23 +61,5 @@ router.post('/:id/apply', async (req, res) => {
 });
 
 
-// GET walk requests for a specific owner
-router.get('/owner/:id', async (req, res) => {
-  const ownerId = req.params.id;
-
-  try {
-    const [rows] = await db.query(`
-      SELECT wr.*, d.name AS dog_name, d.size
-      FROM WalkRequests wr
-      JOIN Dogs d ON wr.dog_id = d.dog_id
-      WHERE d.owner_id = ? AND wr.status != 'accepted'
-    `, [ownerId]);
-
-    res.json(rows);
-  } catch (error) {
-    // console.error('SQL Error:', error);
-    res.status(500).json({ error: 'Failed to fetch owner walk requests' });
-  }
-});
 
 module.exports = router;
