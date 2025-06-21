@@ -88,17 +88,25 @@
         const error = ref('');
         const dogs = ref([]); // holds the list of dogs
 
-        async function loadOwnerDogs(ownerId) {
+        async function loadDogs(){ // Renamed from loadOwnerDogs to loadDogs
           try {
-            const res = await fetch(`/api/users/${ownerId}/dogs`);
+            const res = await fetch('/api/users/my-dogs'); // Endpoint uses /my-dogs now
             if (!res.ok) {
               const errorData = await res.json();
-              throw new Error(errorData.error || 'Failed to load dogs for owner');
+              throw new Error(errorData.error || 'Failed to load dogs');
             }
-            dogs.value = await res.json();
+            myDogs.value = await res.json(); // Assign to myDogs
+            // Automatically select the first dog if available
+            if (myDogs.value.length > 0) {
+              form.value.dog_id = myDogs.value[0].dog_id;
+            }
           } catch (err) {
             error.value = 'Failed to load your dogs: ' + err.message;
             console.error('Error loading owner dogs:', err);
+            // Redirect to login if not authenticated or session expired
+            if (err.message.includes('Not logged in')) { // Check error message for authentication failure
+                window.location.href = '/';
+            }
           }
         }
 
